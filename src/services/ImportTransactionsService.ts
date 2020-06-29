@@ -74,6 +74,7 @@ class ImportTransactionsService {
     );
 
     await trasactionRepository.save(newTransactions);
+
     // const transactions: Array<Transaction> = [];
 
     // for (let i = 0; i < data.length; i++) {
@@ -119,6 +120,10 @@ class ImportTransactionsService {
 
     await new Promise(resolve => {
       parseCSV.on('end', resolve);
+    });
+
+    fs.unlink(csvFilePath, err => {
+      if (err) throw Error('Erro ao deletar arquivo temporario');
     });
 
     return dataFile;
